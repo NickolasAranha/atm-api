@@ -47,6 +47,7 @@ public class AccountService {
             account.setBalance(account.getBalance().subtract(amount));
             Transaction t = new Transaction(null, TransactionEnum.WITHDRAW, Instant.now(), account, amount);
             service.save(t);
+            account.getTransactions().add(t);
             return repository.save(account);
         }
         return null;
@@ -58,6 +59,7 @@ public class AccountService {
             account.setBalance(account.getBalance().add(amount));
             Transaction t = new Transaction(null, TransactionEnum.DEPOSIT, Instant.now(), account, amount);
             service.save(t);
+            account.getTransactions().add(t);
             return repository.save(account);
         } return null;
     }
