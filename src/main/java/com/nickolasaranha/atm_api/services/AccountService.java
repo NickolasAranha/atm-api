@@ -5,6 +5,7 @@ import com.nickolasaranha.atm_api.entities.Account;
 import com.nickolasaranha.atm_api.entities.Transaction;
 import com.nickolasaranha.atm_api.entities.enums.TransactionEnum;
 import com.nickolasaranha.atm_api.repositories.AccountRepository;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -44,10 +45,20 @@ public class AccountService {
                 throw new IllegalArgumentException("Insufficient funds");
             }
             account.setBalance(account.getBalance().subtract(amount));
-            Transaction t = new Transaction(null, TransactionEnum.SAQUE, Instant.now(), account, amount);
+            Transaction t = new Transaction(null, TransactionEnum.WITHDRAW, Instant.now(), account, amount);
             service.save(t);
             return repository.save(account);
         }
         return null;
+    }
+
+    public Account deposit(String numberAccount, @Valid BigDecimal amount) {
+        if (repository.existsByNumberAccount(numberAccount)) {
+            Account account = repository.findByNumberAccount(numberAccount).orElse(null);
+            account.setBalance(account.getBalance().add(amount));
+            Transaction t = new Transaction(null, TransactionEnum.DEPOSIT, Instant.now(), account, amount);
+            service.save(t);
+            return repository.save(account);
+        } return null;
     }
 }

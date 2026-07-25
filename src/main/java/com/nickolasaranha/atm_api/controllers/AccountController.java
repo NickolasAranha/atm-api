@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/accounts")
+@CrossOrigin(origins = "*")
 public class AccountController {
 
     private AccountService service;
@@ -44,4 +45,13 @@ public class AccountController {
         }
         return ResponseEntity.badRequest().build();
     }
- }
+
+    @PostMapping("/{numberAccount}/deposit")
+    public ResponseEntity<Account> deposit(@PathVariable("numberAccount") String numberAccount, @Valid @RequestBody BigDecimal amount) {
+        Account obj  = service.deposit(numberAccount, amount);
+        if (obj != null) {
+            return ResponseEntity.ok().body(obj);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+}

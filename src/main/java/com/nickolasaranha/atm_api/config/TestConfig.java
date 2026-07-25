@@ -32,8 +32,8 @@ public class TestConfig implements CommandLineRunner {
         Account account = new Account(null, 10, "100000", "oii", BigDecimal.valueOf(100.0), new ArrayList<>());
         accountService.save(account);
 
-        Transaction transaction = new Transaction(null, TransactionEnum.SAQUE, Instant.parse("2019-06-20T19:53:07Z"), account, BigDecimal.valueOf(100.0));
-        Transaction trans2 = new Transaction(null, TransactionEnum.DEPOSITO, Instant.parse("2019-06-20T19:53:08Z"), account, BigDecimal.valueOf(200.0));
+        Transaction transaction = new Transaction(null, TransactionEnum.WITHDRAW, Instant.parse("2019-06-20T19:53:07Z"), account, BigDecimal.valueOf(100.0));
+        Transaction trans2 = new Transaction(null, TransactionEnum.DEPOSIT, Instant.parse("2019-06-20T19:53:08Z"), account, BigDecimal.valueOf(200.0));
 
         transactionService.save(transaction);
         transactionService.save(trans2);
