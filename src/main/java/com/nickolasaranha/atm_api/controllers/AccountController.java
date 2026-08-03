@@ -41,7 +41,7 @@ public class AccountController {
     public ResponseEntity<Account> withdraw(@PathVariable("numberAccount") String numberAccount, @Valid @RequestBody BigDecimal amount) {
         Account obj = service.withdraw(numberAccount, amount);
         if (obj != null) {
-            return ResponseEntity.ok().body(obj);
+            return ResponseEntity.ok().body(obj);   
         }
         return ResponseEntity.badRequest().build();
     }
